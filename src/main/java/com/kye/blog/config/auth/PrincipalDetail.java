@@ -69,9 +69,7 @@ public class PrincipalDetail implements UserDetails{
 	// 원래는 권한이 여러개 있을 수 있어서  루프를 돌아야 하는데 우리는 한개이기 때문에 한개만 리턴하도록 만듬
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		
-		System.out.println("PrincipalDetail => GrantedAuthority> getAuthorities()");
-		
+
 		Collection<GrantedAuthority> collectors = new ArrayList<>(); 
 
 //		//자바에서는 오브젝트는 넣어도 메서드를 파라메터로 넣을 수 없다 그래서 아래와 같은 복잡한 코딩이 됨

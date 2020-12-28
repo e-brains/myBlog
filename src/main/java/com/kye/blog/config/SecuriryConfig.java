@@ -54,7 +54,7 @@ public class SecuriryConfig extends WebSecurityConfigurerAdapter{
 		
 		//로그인을 가로채서 시큐리티 저장소를 만들어야 하는데 이때 저장 타입이 UserDetails의 타입이어야 한다.
 		//이를 위해서 PrincipalDetail을 만든다.
-		
+		// 스프링 시큐리티는 '/logout'이 기본값이다
 	}	
 
 	

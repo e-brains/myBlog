@@ -2,10 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<sec:authorize access="isAuthenticated()"> <!-- 로그인 되어 있으면 -->
+<sec:authorize access="isAuthenticated()"> <!-- 로그인 되어 있으면 세션정보를 활용할 수 있다 -->
 	<!-- princaipa이라는 속성은 다이렉트 엑세스를 허용한다 -->
 	<!--  var="principal" 변수에 인증정보를 모두 담아둔다. -->
-	<sec:authentication property="principal" var="principal"/> 
+	<sec:authentication property="principal" var="principal"/> <!-- princaipal에 세션정보가 있다.-->
 </sec:authorize>
 
 
@@ -41,7 +41,7 @@
 					<ul class="navbar-nav"> <!-- 로그인 된 경우만 해당되니 /auth로 갈 필요가 없음 -->
 						<li class="nav-item"><a class="nav-link" href="/board/form">글쓰기</a></li>
 						<li class="nav-item"><a class="nav-link" href="/user/form">회원정보</a></li>
-						<li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
+						<li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li> <!-- 스프링 시큐리티는 /logout이 기본값이다. -->
 					</ul>
 				</c:otherwise>
 			</c:choose>
