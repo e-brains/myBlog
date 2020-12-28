@@ -14,14 +14,14 @@ public class PrincipalDetail implements UserDetails{
 
 	private static final long serialVersionUID = 7645618956884452156L;
 
-	public PrincipalDetail(User user) {
-		this.user = user;
-	}
-	
 	//PrincipalDetail가 세션저장소에 저장될때 User객체도 같이 저장되도록 여기서 선언한다.
 	// 컴포지션 (객체를 포함할때 extends를 사용하면 상속이라 하고 클래스 내 품고 있는 것은 컴포지션이라 한다.)
 	private User user;  
 	
+	public PrincipalDetail(User user) {
+		this.user = user;
+	}
+		
 	public User getUser() {
 		return user;
 	}
