@@ -1,0 +1,27 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%@ include file="../layout/header.jsp"%>
+
+<div class="container">
+
+	<form > <!-- action="/api/user/join" method="post" 옛날 방식은 사용하지 않기로 함 -->
+		<div class="form-group">
+			<label for="username">User Name:</label> <input type="text" class="form-control" placeholder="Enter username" id="username">
+		</div>
+
+		<div class="form-group">
+			<label for="password">Password:</label> <input type="password" class="form-control" placeholder="Enter password" id="password">
+		</div>
+
+		<div class="form-group">
+			<label for="email">Email address:</label> <input type="email" class="form-control" placeholder="Enter email" id="email">
+		</div>
+
+	</form>
+	<button id="btn-save" class="btn btn-primary">회원가입</button> <!-- form 태그 밖으로 빼야 submit를 막을 수 있다. -->
+
+</div>
+
+<script src="/js/user.js"></script> 
+
+<%@ include file="../layout/footer.jsp"%>
