@@ -40,10 +40,26 @@ public class BoardService {
 		});
 	}
 	
+	// 수정하기
+	@Transactional
+	public void updateById(int id, Board requestBoard) {
+		
+		Board board = boardRepository.findById(id).orElseThrow( () -> {
+			return new IllegalArgumentException("글 찾기 실패 : 아이디를 찾을 수 없습니다.");
+		}); // 영속화 시키는 작업을 먼저 완료한다.
+		
+		//기존 board의 데이터를 읽어 와서 타이틀과 컨테츨를 변경 
+		board.setTitle(requestBoard.getTitle());
+		board.setContent(requestBoard.getContent());
+				
+		// 해당 함수 종료 시 (서비스가 종료될 때) 트랜잭션이 종료되면서 더티체킹이 일어나서 자동 업데이트가 됨
+		// 내용이 변경된 것을 자동 감지하고 DB에 flush한다.
+	}
+	
 	//삭제하기
 	@Transactional
 	public void deleteById(int id) {
-		System.out.println("BoardService >> deleteById => id : " + id);
+
 		boardRepository.deleteById(id);
 	}
 	
