@@ -1,8 +1,8 @@
 package com.kye.blog.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,17 +19,24 @@ public class BoardService {
 	//글쓰기
 	@Transactional
 	public void writeBoard(Board board , User user) { //title, content
-		System.out.println("BoardService>> writeBoard >> user 정보 : " + user.getId());
+
 		board.setCount(0); // 조회수는 처음 글을 쓰면 0 이다.
 		board.setUser(user);
 		boardRepository.save(board);
 	} 
-	
-	public List<Board> boardList(){
-		return boardRepository.findAll();
+	//DB의 content컬럼의 보면 태그가 들어가 있는데 그건 summernote에서 넣는 것이니 정상임
+
+	//상세보기
+	public Board findById(int id) {
+		return boardRepository.findById(id).orElseThrow( () -> {
+			return new IllegalArgumentException("글 상세보기 실패 : 아이디를 찾을 수 없습니다.");
+		});
 	}
 	
-	
-	//DB의 content컬럼의 보면 태그가 들어가 있는데 그건 summernote에서 넣는 것이니 정상임
+	//글목록 (페이징 처리 추가)
+	public Page<Board> boardList(Pageable pageable){
+		return boardRepository.findAll(pageable);
+	}
+
 	
 }

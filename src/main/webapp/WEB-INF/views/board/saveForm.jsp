@@ -14,8 +14,10 @@
 			<textarea class="form-control summernote" rows="5" id="content"></textarea>
 		</div>
 
-		<button id="btn-save" class="btn btn-primary">저장</button>
 	</form>
+
+	<!-- jquery를 사용하여 ajax로 통신할때는 form 태그 밖에 놓아야 ajax통신 후 스크립트가 제대로 동작함 -->
+	<button id="btn-save" class="btn btn-primary">저장</button>
 
 </div>
 
