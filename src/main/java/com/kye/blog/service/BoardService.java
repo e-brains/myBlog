@@ -26,17 +26,26 @@ public class BoardService {
 	} 
 	//DB의 content컬럼의 보면 태그가 들어가 있는데 그건 summernote에서 넣는 것이니 정상임
 
+	//글목록 (페이징 처리 추가)
+	@Transactional(readOnly = true)
+	public Page<Board> boardList(Pageable pageable){
+		return boardRepository.findAll(pageable);
+	}
+	
 	//상세보기
+	@Transactional(readOnly = true)
 	public Board findById(int id) {
 		return boardRepository.findById(id).orElseThrow( () -> {
 			return new IllegalArgumentException("글 상세보기 실패 : 아이디를 찾을 수 없습니다.");
 		});
 	}
 	
-	//글목록 (페이징 처리 추가)
-	public Page<Board> boardList(Pageable pageable){
-		return boardRepository.findAll(pageable);
+	//삭제하기
+	@Transactional
+	public void deleteById(int id) {
+		System.out.println("BoardService >> deleteById => id : " + id);
+		boardRepository.deleteById(id);
 	}
-
+	
 	
 }
