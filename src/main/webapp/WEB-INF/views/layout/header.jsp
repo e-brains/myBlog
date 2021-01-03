@@ -5,7 +5,9 @@
 <sec:authorize access="isAuthenticated()"> <!-- 로그인 되어 있으면 세션정보를 활용할 수 있다 -->
 	<!-- princaipa이라는 속성은 다이렉트 엑세스를 허용한다 -->
 	<!--  var="principal" 변수에 인증정보를 모두 담아둔다. -->
-	<sec:authentication property="principal" var="principal"/> <!-- princaipal에 세션정보가 있다.-->
+	<!-- 서버단의 PrincipalDetail.java의 속성을 클라이언트 단에서 읽을 수 있게 해준다 -->
+	<!-- princaipal에 세션정보가 있다.-->
+	<sec:authentication property="principal" var="principal"/> 
 </sec:authorize>
 
 

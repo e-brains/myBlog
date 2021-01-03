@@ -12,6 +12,11 @@ let index = {
 			this.save();
 		} );
 		
+		//회원정보 수정
+		$("#btn-update").on("click", ()=>{   
+			this.update();
+		} );
+		
 		/* security적용으로 사용 안함 
 		$("#btn-login").on("click", ()=>{   
 			this.login();
@@ -44,6 +49,33 @@ let index = {
 			alert("회원가입이 완료되었습니다.");
 			//alert(resp);
 			//console.log(resp);
+			location.href = "/";
+			
+		}).fail(function(){  //요청이 실패 시 수행
+			alert(JSON.stringify(error));
+			
+		});  
+		 
+    },
+
+    update: function() {
+        //username은 수정 안하지만 유저를 구분해야 하므로 id를 받는다.
+		let data = {
+			id: $("#id").val(),
+			password: $("#password").val(),
+			email: $("#email").val()
+		};
+		
+
+		$.ajax({
+			type: "PUT",
+			url: "/api/user/update",
+			data: JSON.stringify(data),   //http body 데이터
+			contentType: "application/json; charset=utf-8", //body데이터가 어떤 타입인지 설정 (MIME)
+			dataType: "json" //서버로 부터 응답이 왔을때 기본적으로 문자열인데 (생긴게 json이라면) => javascript object로 변경해 준다.
+			
+		}).done(function(resp){   //요청이 정상처리 되어서 끝나는때 수행
+			alert("회원정보 수정이 완료되었습니다.");
 			location.href = "/";
 			
 		}).fail(function(){  //요청이 실패 시 수행
