@@ -39,8 +39,7 @@ public class UserApiController {
 	public ResponseDto<Integer> userUpdate(@RequestBody User user) {
 		
 		userService.userUpdate(user);
-		
-				
+						
 		//세션 등록
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
