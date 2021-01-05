@@ -3,6 +3,7 @@ package com.kye.blog.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,7 +21,14 @@ public class SecuriryConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
 	private PrincipalDetailsService principalDetailsService;
-		
+
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+
+		return super.authenticationManagerBean();
+	}
+	
 	//고정길이의 스트링 (해쉬값)으로 변환해 준다.
 	@Bean
 	public BCryptPasswordEncoder encodePWD() {

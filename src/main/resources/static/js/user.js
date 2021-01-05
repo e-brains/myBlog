@@ -62,6 +62,7 @@ let index = {
         //username은 수정 안하지만 유저를 구분해야 하므로 id를 받는다.
 		let data = {
 			id: $("#id").val(),
+			username: $("#username").val(),
 			password: $("#password").val(),
 			email: $("#email").val()
 		};
