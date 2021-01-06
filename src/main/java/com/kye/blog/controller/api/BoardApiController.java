@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kye.blog.config.auth.PrincipalDetail;
 import com.kye.blog.dto.ResponseDto;
 import com.kye.blog.model.Board;
+import com.kye.blog.model.Reply;
 import com.kye.blog.service.BoardService;
 
 @RestController
@@ -35,6 +36,15 @@ public class BoardApiController {
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
 	
+	//댓글쓰기
+	//@AuthenticationPrincipal PrincipalDetail 세션값을 읽을 수 있다.
+	@PostMapping("/api/board/{boardId}/reply") 
+	public ResponseDto<Integer> replySave(@PathVariable int boardId, @RequestBody Reply reply, @AuthenticationPrincipal PrincipalDetail principal ) {
+		
+		boardService.writeReply(principal.getUser(), boardId, reply);
+		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+	} 
+		
 	@DeleteMapping("/api/board/{id}") //삭제
 	public ResponseDto<Integer> deleteById(@PathVariable int id) {
 
@@ -42,5 +52,5 @@ public class BoardApiController {
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
 	
-	
+		
 }

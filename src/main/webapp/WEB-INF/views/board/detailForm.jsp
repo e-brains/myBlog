@@ -27,27 +27,33 @@
 	
 <!-- 댓글 입력 bootstrap  BS4 Cards  -->
 	<div class="card">
-		<div class="card-body">
-			<h6 class="card-title">댓글달기</h6>
-			<textarea class="form-control" rows="1" cols=""></textarea>
-		</div>
-		<div class="card-footer">
-			<button class="btn btn-primary">등록</button>
-		</div>
+		<form>
+			<input type="hidden" id="boardId" value="${board.id}" />
+			<div class="card-body">
+				<h6 class="card-title">댓글달기</h6>
+				<textarea id="reply-content" class="form-control" rows="1" cols=""></textarea>
+			</div>
+			<div class="card-footer">
+				<button type="button" id="btn-reply-save" class="btn btn-primary">등록</button>
+			</div>
+		</form>
 	</div>
 
 	<!-- 댓글 리스트  BS4 List Groups -->
 	<br />
 	<div class="card">
 		<div class="card-body">댓글 리스트	</div>
-		<ul id="comment--box" class="list-group">
-		  <li id="comment--1" class="list-group-item d-flex justify-content-between">
-		  		<div>댓글내용</div>
-		  		<div class="d-flex">
-			  		<div class="font-italic">작성자 : 홍길동&nbsp;</div>
-			  		<button class="badge">삭제</button>
-		  		</div>
-		  </li>
+		<ul id="reply--box" class="list-group">
+			<c:forEach var="reply" items="${board.replys}">
+			  <li id="reply--1" class="list-group-item d-flex justify-content-between">
+			  		<div>${reply.content}</div>
+			  		<div class="d-flex">
+				  		<div class="font-italic">작성자 : ${reply.user.username}&nbsp;</div>
+				  		<button class="badge">삭제</button>
+			  		</div>
+			  </li>			
+			</c:forEach>
+
 		</ul>
 	</div>
 

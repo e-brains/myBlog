@@ -13,8 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -54,7 +57,9 @@ public class Board {
 	//@ManyToOne의 default전략은 (fetch=FetchType.EAGER)로 즉시 조인해서 가져오라는 의미 (명시하지 않으면 default로 작동)
 	//@OneToMany의 default전략은 (fetch=FetchType.LAZY)로 나중에 필요한때에 조인해서 가져오라는 의미 (명시하지 않으면 default로 작동)
 	@OneToMany(mappedBy = "board", fetch=FetchType.EAGER) //mappedBy는 DB에 들어있는 것이 아님  
-	private List<Reply> reply;  // 단순히 게시글을 조회할때 하위에 딸려 있는 답변글을 가져오기 위한 코드다.
+	@JsonIgnoreProperties({"board"})  //무한참조 방지를 위해 걸어준다. {"board", "user"} user도 참조 안함
+	@OrderBy("id desc")
+	private List<Reply> replys;  // 단순히 게시글을 조회할때 하위에 딸려 있는 답변글을 가져오기 위한 코드다.
 	
 	@CreationTimestamp // 시간이 자동 입력된다.
 	private Timestamp createDate;  //java.sql의 Timestamp사용

@@ -37,14 +37,14 @@ public class BoardController {
 	//상세보기
 	@GetMapping("/board/{id}")
 	public String detailForm(@PathVariable int id, Model model) {
-		model.addAttribute("board", boardService.findById(id));
+		model.addAttribute("board", boardService.lookupDetail(id));
 		return "board/detailForm";
 	}
 	
 	//수정하기 위한 상세 조회 및 수정용 화면 호출
 	@GetMapping("/board/{id}/updateForm")
 	public String updateForm(@PathVariable int id, Model model) {
-		model.addAttribute("board", boardService.findById(id));
+		model.addAttribute("board", boardService.lookupDetail(id));
 		return "board/updateForm";
 	}
 	

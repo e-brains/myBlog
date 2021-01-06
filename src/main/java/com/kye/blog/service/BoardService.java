@@ -7,14 +7,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kye.blog.model.Board;
+import com.kye.blog.model.Reply;
 import com.kye.blog.model.User;
 import com.kye.blog.repository.BoardRepository;
+import com.kye.blog.repository.ReplyRepository;
 
 @Service // IoC를 bean등록, 트랜잭션 관리 (commit 과 rollback 의 단위)
 public class BoardService {
 
 	@Autowired 
 	private BoardRepository boardRepository;
+	
+	@Autowired
+	private ReplyRepository replyRepository;
 
 	//글쓰기
 	@Transactional
@@ -34,7 +39,7 @@ public class BoardService {
 	
 	//상세보기
 	@Transactional(readOnly = true)
-	public Board findById(int id) {
+	public Board lookupDetail(int id) {
 		return boardRepository.findById(id).orElseThrow( () -> {
 			return new IllegalArgumentException("글 상세보기 실패 : 아이디를 찾을 수 없습니다.");
 		});
@@ -55,6 +60,21 @@ public class BoardService {
 		// 해당 함수 종료 시 (서비스가 종료될 때) 트랜잭션이 종료되면서 더티체킹이 일어나서 자동 업데이트가 됨
 		// 내용이 변경된 것을 자동 감지하고 DB에 flush한다.
 	}
+	
+	//댓글 쓰기
+	@Transactional
+	public void writeReply(User user, int boardId, Reply requestReply) { 
+
+		Board board = boardRepository.findById(boardId).orElseThrow( () -> {
+			return new IllegalArgumentException("댓글 쓰기 실패 : 아이디를 찾을 수 없습니다.");
+		}); // 영속화 시키는 작업을 먼저 완료한다.
+		
+		requestReply.setUser(user);
+		requestReply.setBoard(board);
+		
+		replyRepository.save(requestReply);
+	} 
+	
 	
 	//삭제하기
 	@Transactional
