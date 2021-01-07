@@ -80,28 +80,39 @@ public class BoardService {
 	 * replyRepository.save(requestReply); }
 	 */
 
+	/*
+	 * // 댓글 쓰기 (Dto 적용 후)
+	 * 
+	 * @Transactional public void writeReply(ReplySaveRequestDto
+	 * replySaveRequestDto) {
+	 * 
+	 * // user 정보 영속화 User user =
+	 * userRepository.findById(replySaveRequestDto.getUserId()).orElseThrow(() -> {
+	 * return new
+	 * IllegalArgumentException("댓글 쓰기 user 정보 영속화 실패 : user 아이디를 찾을 수 없습니다."); });
+	 * 
+	 * // board 정보 영속화 Board board =
+	 * boardRepository.findById(replySaveRequestDto.getBoardId()).orElseThrow(() ->
+	 * { return new
+	 * IllegalArgumentException("댓글 쓰기 board 정보 영속화 실패 : board 아이디를 찾을 수 없습니다.");
+	 * });
+	 * 
+	 * Reply reply =
+	 * Reply.builder().user(user).board(board).content(replySaveRequestDto.
+	 * getContent()).build();
+	 * 
+	 * replyRepository.save(reply); }
+	 */
 	
-	  //댓글 쓰기 (Dto 적용 후)
-	  @Transactional public void writeReply(ReplySaveRequestDto replySaveRequestDto) {
-		
-		  // user 정보 영속화
-		  User user = userRepository.findById(replySaveRequestDto.getUserId()).orElseThrow( () -> { return
-		  new IllegalArgumentException("댓글 쓰기 user 정보 영속화 실패 : user 아이디를 찾을 수 없습니다."); });
-		  
-		  // board 정보 영속화
-		  Board board = boardRepository.findById(replySaveRequestDto.getBoardId()).orElseThrow( () -> { return
-		  new IllegalArgumentException("댓글 쓰기 board 정보 영속화 실패 : board 아이디를 찾을 수 없습니다."); }); 
-
-		  Reply reply = Reply.builder()
-				  .user(user)
-				  .board(board)
-				  .content(replySaveRequestDto.getContent())
-				  .build();
-		  
-		  replyRepository.save(reply); 
-	  }
-	 
-
+	// 댓글 쓰기 (네이티브 쿼리 적용)
+	// ReplyRepository에 내가 직접 mySave()메소드를 만든다.
+	// ReplyRepository의 mySave()메소드를 이용하면 자동으로 영속화 된다.
+	@Transactional
+	public void writeReply(ReplySaveRequestDto replySaveRequestDto) {
+		replyRepository.mySave(replySaveRequestDto.getUserId(), replySaveRequestDto.getBoardId(), replySaveRequestDto.getContent());
+	}
+	
+	
 	// 삭제하기
 	@Transactional
 	public void deleteById(int id) {

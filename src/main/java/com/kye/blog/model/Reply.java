@@ -18,6 +18,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -43,14 +44,14 @@ public class Reply {
 	private Timestamp createDate; // java.sql의 Timestamp사용
 
 	// 안전한 객체 생성 패턴
-	@Builder
-	public Reply(String content, Board board, User user) {
+	public Reply(int id, String content, Board board, User user) {
 		// Spring Assert는 인수를 검증하고 조건에 맞지 않는 경우 IllegalArgumentException
 		// 또는 IllegalStateException를 발생시킵니다.
 		Assert.hasText(content, "content must not be empty");
 		Assert.notNull(user, "board must not be empty");
 		Assert.notNull(board, "user must not be empty");
 
+		this.id = id;
 		this.content = content;
 		this.board = board;
 		this.user = user;

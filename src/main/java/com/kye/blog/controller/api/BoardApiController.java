@@ -37,7 +37,7 @@ public class BoardApiController {
 	}
 	
 	/*
-	 * //댓글쓰기 //@AuthenticationPrincipal PrincipalDetail에서 세션값을 읽을 수 있다.
+	 * //댓글쓰기 Dto 미적용 //@AuthenticationPrincipal PrincipalDetail에서 세션값을 읽을 수 있다.
 	 * 
 	 * @PostMapping("/api/board/{boardId}/reply") public ResponseDto<Integer>
 	 * replySave(@PathVariable int boardId, @RequestBody Reply
@@ -48,7 +48,7 @@ public class BoardApiController {
 	 */
 
 	//큰 프로젝트일 수록 데이터 받을때 컨트롤러에서 dto를 만들어서 받는게 좋다. 
-	//dto를 이용하는 방법으로 수정 20210107 
+	//Dto를 이용하는 방법으로 수정 20210107 (DTO적용) 
 	//1. ReplySaveRequestDto 클래스를 만든다.
 	//2. detailForm.jsp에 user id를 히든으로 만든다.
 	//3. board.js에서 data에 user id와 board id를 모두 넣어준다.
@@ -60,9 +60,8 @@ public class BoardApiController {
 		boardService.writeReply(replySaveRequestDto);
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	} 	
-	
-	
-	
+
+	//자바 상식 : 오브젝트를 출력하게 되면 자동으로 toString()이 호출된다.
 	
 	@DeleteMapping("/api/board/{id}") //삭제
 	public ResponseDto<Integer> deleteById(@PathVariable int id) {
