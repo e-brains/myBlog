@@ -63,9 +63,17 @@ public class BoardApiController {
 
 	//자바 상식 : 오브젝트를 출력하게 되면 자동으로 toString()이 호출된다.
 	
+	//댓글 삭제하기
+	//{boardId}는 단순히 URI를 만들기 위해 넣음
+	@DeleteMapping("/api/board/{boardId}/reply/{replyId}")
+	public ResponseDto<Integer> replyDelete(@PathVariable int replyId ) {
+		boardService.deleteReply(replyId);
+		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+	} 	
+	
+	//게시글 삭제하기 	
 	@DeleteMapping("/api/board/{id}") //삭제
 	public ResponseDto<Integer> deleteById(@PathVariable int id) {
-
 		boardService.deleteById(id);
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}

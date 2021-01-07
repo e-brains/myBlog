@@ -3,6 +3,7 @@ package com.kye.blog.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -56,7 +57,9 @@ public class Board {
 	// "board"는 Reply클래스에 있는 보드객체의 Join컬럼에 설정된 boardId의 오브젝트 선언 변수를 쓰면됨
 	//@ManyToOne의 default전략은 (fetch=FetchType.EAGER)로 즉시 조인해서 가져오라는 의미 (명시하지 않으면 default로 작동)
 	//@OneToMany의 default전략은 (fetch=FetchType.LAZY)로 나중에 필요한때에 조인해서 가져오라는 의미 (명시하지 않으면 default로 작동)
-	@OneToMany(mappedBy = "board", fetch=FetchType.EAGER) //mappedBy는 DB에 들어있는 것이 아님  
+	//mappedBy는 DB에 저장하지 않음
+	//cascade옵션 REMOVE는 게시글이 삭제될때 댓글도 삭제함
+	@OneToMany(mappedBy = "board", fetch=FetchType.EAGER, cascade=CascadeType.REMOVE)  
 	@JsonIgnoreProperties({"board"})  //무한참조 방지를 위해 걸어준다. {"board", "user"} user도 참조 안함
 	@OrderBy("id desc")
 	private List<Reply> replys;  // 단순히 게시글을 조회할때 하위에 딸려 있는 답변글을 가져오기 위한 코드다.

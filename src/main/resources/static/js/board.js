@@ -116,10 +116,27 @@ let index = {
 			
 		}).fail(function(){  //요청이 실패 시 수행
 			alert(JSON.stringify(error));
-			
 		});  
     },
 
+	/* 댓글 식제 */ 
+	//replyDelete는 onClick함수이기 때문에 리스너 즉 init: 에 $("#btn-reply-save").on("click", ()=>을 만들지 않는다.
+     replyDelete: function(boardId, replyId) {
+		$.ajax({
+			type: "DELETE",
+			url: "/api/board/" + boardId + "/reply/" + replyId,
+			dataType: "json" 
+			
+		}).done(function(resp){   // 요청 성공
+			alert("선택하신 댓글이 삭제되었습니다.");
+			location.href = "/board/"+ boardId;
+			
+		}).fail(function(){  //요청 실패 
+			alert(JSON.stringify(error));
+		});  
+    },
+
+	//게시글 삭제
     del: function() {
 		let id =$("#id").text();
 		$.ajax({

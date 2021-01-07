@@ -8,11 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kye.blog.dto.ReplySaveRequestDto;
 import com.kye.blog.model.Board;
-import com.kye.blog.model.Reply;
 import com.kye.blog.model.User;
 import com.kye.blog.repository.BoardRepository;
 import com.kye.blog.repository.ReplyRepository;
-import com.kye.blog.repository.UserRepository;
 
 @Service // IoC를 bean등록, 트랜잭션 관리 (commit 과 rollback 의 단위)
 public class BoardService {
@@ -23,8 +21,6 @@ public class BoardService {
 	@Autowired
 	private ReplyRepository replyRepository;
 
-	@Autowired
-	private UserRepository userRepository;
 
 	// 글쓰기
 	@Transactional
@@ -112,11 +108,15 @@ public class BoardService {
 		replyRepository.mySave(replySaveRequestDto.getUserId(), replySaveRequestDto.getBoardId(), replySaveRequestDto.getContent());
 	}
 	
-	
-	// 삭제하기
+	// 댓글 삭제하기
+	@Transactional
+	public void deleteReply(int replyId) {
+		replyRepository.deleteById(replyId);
+	}
+		
+	// 게시글 삭제하기
 	@Transactional
 	public void deleteById(int id) {
-
 		boardRepository.deleteById(id);
 	}
 

@@ -23,7 +23,8 @@ let index = {
 		} );
 		*/
 	},
-		
+	
+	//회원가입	
     save: function() {
         //alert('user의 save함수 호출됨');
 		let data = {
@@ -45,13 +46,15 @@ let index = {
 			contentType: "application/json; charset=utf-8", //body데이터가 어떤 타입인지 설정 (MIME)
 			dataType: "json" //서버로 부터 응답이 왔을때 기본적으로 문자열인데 (생긴게 json이라면) => javascript object로 변경해 준다.
 			
-		}).done(function(resp){   //요청이 정상처리 되어서 끝나는때 수행
-			alert("회원가입이 완료되었습니다.");
-			//alert(resp);
-			//console.log(resp);
-			location.href = "/";
+		}).done(function(resp){   // 요청성공
+			if ( resp.status === 500 ){
+				alert("회원가입에 실패하였습니다.");				
+			}else {
+				alert("회원가입이 완료되었습니다.");
+				location.href = "/";								
+			}
 			
-		}).fail(function(){  //요청이 실패 시 수행
+		}).fail(function(){  //요청 실패 
 			alert(JSON.stringify(error));
 			
 		});  
