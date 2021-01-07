@@ -28,6 +28,7 @@
 <!-- 댓글 입력 bootstrap  BS4 Cards  -->
 	<div class="card">
 		<form>
+			<input type="hidden" id="userId" value="${principal.user.id}" />
 			<input type="hidden" id="boardId" value="${board.id}" />
 			<div class="card-body">
 				<h6 class="card-title">댓글달기</h6>

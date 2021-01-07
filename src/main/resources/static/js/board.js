@@ -67,14 +67,16 @@ let index = {
 		});  
     },
  
-    replySave: function() {
+/* Dto 미적용 */
+/* 
+     replySave: function() {
 		let data = {
 			content: $("#reply-content").val()
 		};
 		
 		let boardId = $("#boardId").val();
 				
-		/* URI에 $를 사용 시 싱글 쿼테이션 사용  url: '/api/board/${boardId}/reply'  */
+		// URI에 $를 사용 시 싱글 쿼테이션 사용  url: '/api/board/${boardId}/reply'  
 		$.ajax({
 			type: "POST",
 			url: "/api/board/" + boardId + "/reply",   
@@ -90,8 +92,34 @@ let index = {
 			alert(JSON.stringify(error));
 			
 		});  
+    },*/
+
+	/* Dto 적용 data는 ReplySaveRequestDto에 맞춰서 보낸다*/ 
+     replySave: function() {
+		let data = {
+			userId: $("#userId").val(),
+			boardId: $("#boardId").val(),
+			content: $("#reply-content").val()
+		};
+				
+		// URI에 $를 사용 시 싱글 쿼테이션 사용  url: '/api/board/${boardId}/reply'  
+		$.ajax({
+			type: "POST",
+			url: "/api/board/" + data.boardId + "/reply",
+			data: JSON.stringify(data),   
+			contentType: "application/json; charset=utf-8", 
+			dataType: "json" 
+			
+		}).done(function(resp){   
+			alert("댓글작성이 저장되었습니다.");
+			location.href = "/board/"+data.boardId;
+			
+		}).fail(function(){  //요청이 실패 시 수행
+			alert(JSON.stringify(error));
+			
+		});  
     },
- 
+
     del: function() {
 		let id =$("#id").text();
 		$.ajax({
